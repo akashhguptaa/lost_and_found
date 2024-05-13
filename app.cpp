@@ -98,7 +98,6 @@ private:
     void searchItems(Item& searchItem,const string& str = "");
     void delete_data();
     void displayClaimedData();
-    void displayHashMap();
     
 };
 
@@ -479,19 +478,6 @@ void LostAndFoundSystem :: displayClaimedData(){
     cout << "Thankyou for using our service\n";
 }
 
-void LostAndFoundSystem :: displayHashMap() {
-    cout << "called";
-    if(hashTable.empty()){
-        cout << "Chutiya katt gaya";
-    }
-    for (const auto& pair : hashTable) {
-        cout << "Key: " << pair.first << endl;
-        for (const auto& item : pair.second) {
-            displayItem(item);
-        }
-    }
-}
-
 //user class to implement the founder and looser
 //User class
 
@@ -520,7 +506,6 @@ public:
 
         cout << "Enter the following details based on the time you lost your object: \n";
         Item item(1);
-        system.displayHashMap();
         cout << "Enter Your name: ";
         cin >> Name;
 
@@ -541,7 +526,6 @@ public:
     map<string, string> founderData;
     Finder(LostAndFoundSystem& system){
         Item item;
-        system.displayHashMap();
         string temp;
 
         cout << "Enter  Your Name: ";
