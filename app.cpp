@@ -519,7 +519,7 @@ public:
 
 class Loser : public User {
 public:
-    static map<string, pair<string, int>> loser_data;
+    map<string, pair<string, int>> loser_data;
     Loser(LostAndFoundSystem& system) {
         cout << "Enter the following details based on the time you lost your object: \n";
         Item item(1);
@@ -529,16 +529,19 @@ public:
         cout << "Enter Your id: ";
         getline(cin, ID);
 
+        string roomNo;
         cout << "Enter your room number: ";
-        cout << "Enter Your Name: ";
+        getline(cin, roomNo);
+        RoomNo = stoi(roomNo);
         
-        string roomNoStr;
-        while (true) {
+        
+
+        /*while (true) {
             cout << "Enter room number: ";
             getline(cin, roomNoStr);
 
             // Use stringstream to convert string to int
-            istringstream iss(roomNoStr);
+            /*istringstream iss(roomNoStr);
             if (iss >> RoomNo) {
                 // Conversion successful
                 break;
@@ -547,15 +550,15 @@ public:
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
-        }
+        }*/
         loser_data[ID] = make_pair(Name, RoomNo);
         system.searchItems(item, ID);
     }
+    
 };
 
 class Finder : public User {
 public:
-    static map<string, string> founderData;
     Finder(LostAndFoundSystem& system) {
         Item item;
         string temp;
@@ -565,7 +568,6 @@ public:
         cout << "Enter your uid: ";
         getline(cin, temp);
 
-        founderData["UID"] = temp;
     }       
     Finder(const string& username, const string& password, const string& name, int roomNo)
         : User(username, password, name, roomNo) {}
@@ -575,16 +577,16 @@ int main() {
     LostAndFoundSystem system;
 
     // Adding test cases to the database
-    Item item1("Watch", "Red", "Rolex", "1234", "Office", "None");
-    Item item2("Earphones", "Black", "Sony", "Initials", "Cafe", "Wireless earbuds");
-    Item item3("Watch", "Red", "Rolex", "1113", "you know", "None");
-    Item item4("Pen", "Blue", "Parker", "456", "School", "Fountain pen");
-    Item item5("Wallet", "Black", "Louis Vuitton", "789", "Street", "Leather wallet");
-    Item item6("Bag", "Brown", "Nike", "1011", "Gym", "Sports bag");
-    Item item7("Phone", "Silver", "Samsung", "1213", "Park", "Smartphone");
-    Item item8("Umbrella", "Yellow", "Gucci", "1415", "Beach", "Designer umbrella");
-    Item item9("Laptop", "Gray", "Apple", "1617", "Home", "MacBook Pro");
-    Item item10("Keys", "Silver", "BMW", "1819", "Parking lot", "Car keys");
+    Item item1("watch", "red", "Rolex", "1234", "Office", "None");
+    Item item2("earphones", "black", "Sony", "Initials", "Cafe", "Wireless earbuds");
+    Item item3("watch", "red", "Rolex", "1113", "you know", "None");
+    Item item4("pen", "blue", "Parker", "456", "School", "Fountain pen");
+    Item item5("wallet", "black", "Louis Vuitton", "789", "Street", "Leather wallet");
+    Item item6("bag", "brown", "Nike", "1011", "Gym", "Sports bag");
+    Item item7("phone", "silver", "Samsung", "1213", "Park", "Smartphone");
+    Item item8("umbrella", "yellow", "Gucci", "1415", "Beach", "Designer umbrella");
+    Item item9("laptop", "gray", "Apple", "1617", "Home", "MacBook Pro");
+    Item item10("keys", "silver", "BMW", "1819", "Parking lot", "Car keys");
 
     // Adding items to the system
     system.addItem(item1);
@@ -600,10 +602,10 @@ int main() {
 
     // Adding 4 items with the same unlisted type
     cout << "\nAdding 4 items with the same unlisted type:\n";
-    Item unlistedItem1("Sunglasses", "Black", "Ray-Ban", "2222", "Beach", "Aviators");
-    Item unlistedItem2("Sunglasses", "Black", "Gucci", "3333", "Pool", "Round frame");
-    Item unlistedItem3("Sunglasses", "Black", "Prada", "4444", "Resort", "Cat-eye");
-    Item unlistedItem4("Sunglasses", "Black", "Oakley", "5555", "Park", "Sports");
+    Item unlistedItem1("sunglasses", "black", "Ray-Ban", "2222", "Beach", "Aviators");
+    Item unlistedItem2("sunglasses", "black", "Gucci", "3333", "Pool", "Round frame");
+    Item unlistedItem3("sunglasses", "black", "Prada", "4444", "Resort", "Cat-eye");
+    Item unlistedItem4("sunglasses", "black", "Oakley", "5555", "Park", "Sports");
 
     system.addItem(unlistedItem1);
     system.addItem(unlistedItem2);
@@ -613,6 +615,7 @@ int main() {
 
     cout << "--------------------------------WELCOME TO PLAKSHA's LOST AND FOUND SYSTEM----------------------------------\n";
     while (1) {
+        system.delete_data();
         string choice;
         cout << "Enter Your Option: \n1. Lost \t 2. Found\t 3. Exit \nEnter: ";
         getline(cin, choice);
